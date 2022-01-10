@@ -3,6 +3,7 @@ package server.library.domain;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -19,4 +20,9 @@ public class Book {
     @CollectionTable(name = "book_genres",joinColumns = @JoinColumn(name = "book_id"))
     @Enumerated(EnumType.STRING)
     private Set<Genre> genres;
+
+    private Timestamp issueDate;
+    private Timestamp deliveryDate;
+
+    private String description;
 }
