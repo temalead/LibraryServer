@@ -1,18 +1,22 @@
 package server.library.domain;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
-@RequiredArgsConstructor
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "library_id")
     private Library library;
 
@@ -20,9 +24,6 @@ public class Book {
     @CollectionTable(name = "book_genres",joinColumns = @JoinColumn(name = "book_id"))
     @Enumerated(EnumType.STRING)
     private Set<Genre> genres;
-
-    private Timestamp issueDate;
-    private Timestamp deliveryDate;
 
     private String description;
 }

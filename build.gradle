@@ -14,10 +14,13 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'com.google.code.gson:gson:2.8.9'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'org.springframework.boot:spring-boot'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testImplementation ('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'junit'
@@ -27,6 +30,8 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.22'
     implementation 'org.hibernate:hibernate-validator:7.0.1.Final'
     implementation 'org.postgresql:postgresql:42.3.1'
+    implementation 'com.google.code.gson:gson:2.8.9'
+
 }
 
 test {
