@@ -16,10 +16,11 @@ public class BookService {
     private final BookRepository bookRepository;
 
     public void addBook(Book book){
-        Optional<Book> repository = bookRepository.findById(book.getId());
+        Optional<Book> repository = bookRepository.findByName(book.getName());
         if (repository.isEmpty()){
-            log.info("Book with {} isn`t in library. Adding...",book.getId());
+            log.info("Book with {} isn`t in library. Adding...",book.getName());
             bookRepository.save(book);
+            log.info("Book was added");
         }
     }
 }

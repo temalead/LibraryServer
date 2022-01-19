@@ -15,7 +15,6 @@ public class Address {
     private String city;
     private Integer numberOfHouse;
 
-
     @OneToOne(mappedBy = "address",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "library_id")
     private Library library;
