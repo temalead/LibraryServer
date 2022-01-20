@@ -16,11 +16,14 @@ public class BookService {
     private final BookRepository bookRepository;
 
     public void addBook(Book book){
-        Optional<Book> repository = bookRepository.findByName(book.getName());
-        if (repository.isEmpty()){
+        Optional<Book> bookFromDB = bookRepository.findByName(book.getName());
+        if (bookFromDB.isEmpty()){
             log.info("Book with {} isn`t in library. Adding...",book.getName());
             bookRepository.save(book);
             log.info("Book was added");
+        }
+        else{
+            log.info("Book {} has already in library",book.getName());
         }
     }
 }

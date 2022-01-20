@@ -28,6 +28,10 @@ public class Book {
 
     private String name;
 
+    @ElementCollection(targetClass = String.class,fetch = FetchType.EAGER)
+    @CollectionTable(name = "authors",joinColumns = @JoinColumn(name = "book_id"))
+    private Set<String> authors;
+
     private String description;
 
     @ElementCollection(targetClass = String.class,fetch = FetchType.EAGER)
@@ -35,6 +39,8 @@ public class Book {
     private Set<String> publishers;
 
     private Timestamp dateOfCreation;
+
+    private boolean isBestseller;
 
     @Override
     public String toString() {
