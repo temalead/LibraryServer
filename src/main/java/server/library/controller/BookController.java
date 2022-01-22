@@ -20,8 +20,10 @@ public class BookController {
         return ResponseEntity.ok(book);
     }
 
-    @GetMapping("/book")
-    public ResponseEntity<Book> getBookByName(){
-        return null;
+    @GetMapping("/search/book")
+    public ResponseEntity<Book> getBookByName(@RequestParam String book){
+        Book foundBook = bookService.getBookByName(book);
+        return ResponseEntity.ok()
+                .body(foundBook);
     }
 }

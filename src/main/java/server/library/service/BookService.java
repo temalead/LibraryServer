@@ -26,4 +26,9 @@ public class BookService {
             log.info("Book {} has already in library",book.getName());
         }
     }
+
+    public Book getBookByName(String book) {
+        Optional<Book> foundBook = bookRepository.findByNameStartsWith(book);
+        return  foundBook.orElseThrow();
+    }
 }
