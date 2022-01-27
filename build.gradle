@@ -2,7 +2,15 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.6.2'
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id "org.flywaydb.flyway" version "8.4.3"
 
+
+}
+
+flyway{
+    url = 'jdbc:postgresql://localhost:5432/library'
+    user = 'postgres'
+    password = 'postgres'
 }
 
 group 'org.example'
@@ -34,7 +42,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.4'
 
-    /*implementation 'com.googlecode.flyway:flyway-core:2.3.1'*/
 }
 
 test {

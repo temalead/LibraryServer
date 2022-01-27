@@ -1,13 +1,17 @@
 spring:
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
     url: jdbc:postgresql://localhost:5432/library
-    spring:
-      jackson:
-        serialization:
-          fail-on-empty-beans: false
+  flyway:
+    locations: classpath:migration
+
+
