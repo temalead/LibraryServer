@@ -1,12 +1,15 @@
 package server.library.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Data
-
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,4 +21,16 @@ public class Address {
     @OneToOne(mappedBy = "address",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "library_id")
     private Library library;
+
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", numberOfHouse=" + numberOfHouse +
+                ", library=" + library.getId() +
+                '}';
+    }
 }

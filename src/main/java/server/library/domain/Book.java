@@ -1,17 +1,17 @@
 package server.library.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +19,7 @@ public class Book {
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "library_id")
+    @JsonBackReference
     private Library library;
 
     @ElementCollection(targetClass = Genre.class,fetch = FetchType.EAGER)
@@ -46,7 +47,7 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "id=" + id +
-                ", library=" + library.getId() +
+                "library="+library.getId()+
                 ", genres=" + genres +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
