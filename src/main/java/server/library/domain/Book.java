@@ -1,8 +1,10 @@
 package server.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,6 +14,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Getter
 @Setter
+@Accessors(chain = true)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

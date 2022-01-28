@@ -4,8 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import server.library.domain.Book;
+import server.library.domain.Library;
+import server.library.domain.dto.CreateBookDto;
+import server.library.exception.LibraryNotExistingException;
 import server.library.repository.BookRepository;
+import server.library.repository.LibraryRepository;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -13,17 +18,22 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
+    private final LibraryRepository libraryRepository;
 
-    public void addBook(Book book){
-        Optional<Book> bookFromDB = bookRepository.findByName(book.getName());
-        if (bookFromDB.isEmpty()){
-            log.info("Book with {} isn`t in library. Adding...",book.getName());
-            bookRepository.save(book);
-            log.info("Book was added");
-        }
-        else{
-            log.info("Book {} has already in library",book.getName());
-        }
+    @Transactional
+    public Book addBook(CreateBookDto bookDto){
+        long libraryId = bookDto.getLibraryDto().getId();
+        Library existingLibrary = libraryRepository.findById(libraryId)
+                .orElseThrow(()->new LibraryNotExistingException(libraryId));
+        Book book = new Book()
+                .setName(bookDto.getName())
+                .setLibrary(existingLibrary)
+                .setGenres(bookDto.getGenres())
+                .setAuthors(bookDto.getAuthors())
+                .setPublishers(bookDto.getPublishers())
+                .setDescription(bookDto.getDescription())
+                .setDateOfCreation(bookDto.getDateOfCreation());
+        return bookRepository.save(book);
     }
 
     public Book getBookByName(String book) {
