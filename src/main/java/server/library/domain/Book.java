@@ -5,9 +5,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -42,7 +45,8 @@ public class Book {
     @CollectionTable(name = "publishers",joinColumns = @JoinColumn(name = "book_id"))
     private Set<String> publishers;
 
-    private Timestamp dateOfCreation;
+    @Temporal(TemporalType.DATE)
+    private Date dateOfCreation;
 
     private boolean isBestseller;
 

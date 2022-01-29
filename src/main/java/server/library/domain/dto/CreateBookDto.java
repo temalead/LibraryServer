@@ -16,7 +16,7 @@ public class CreateBookDto {
     @NotNull
     private String name;
     @NotNull
-    private FindLibraryDto findLibraryDto;
+    private Long library;
     private Set<Genre> genres;
     @NotNull
     private Set<String> authors;

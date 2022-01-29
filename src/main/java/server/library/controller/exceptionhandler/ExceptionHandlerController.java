@@ -13,7 +13,7 @@ public class ExceptionHandlerController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({BookNotFoundException.class, LibraryNotExistingException.class})
-    public void doSmth(){
-
+    public ResponseEntity<Void> throwNotFoundExceptionToUser(){
+        return ResponseEntity.badRequest().build();
     }
 }
