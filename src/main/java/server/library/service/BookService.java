@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import server.library.domain.Book;
 import server.library.domain.Library;
 import server.library.domain.dto.CreateBookDto;
+import server.library.exception.BookNotFoundException;
 import server.library.exception.LibraryNotExistingException;
 import server.library.repository.BookRepository;
 import server.library.repository.LibraryRepository;
@@ -36,8 +37,8 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public Book getBookByName(String book) {
-        Optional<Book> foundBook = bookRepository.findByNameStartsWith(book);
-        return  foundBook.orElseThrow();
+    public Book getBookByName(String bookName) {
+        Optional<Book> foundBook = bookRepository.findByNameStartsWith(bookName);
+        return  foundBook.orElseThrow(()->new BookNotFoundException(bookName));
     }
 }

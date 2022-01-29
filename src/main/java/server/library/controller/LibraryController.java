@@ -13,7 +13,7 @@ import server.library.service.LibraryService;
 @RestController
 @RequiredArgsConstructor
 public class LibraryController {
-    private LibraryService service;
+    private final LibraryService service;
 
     public ResponseEntity<Library> addLibrary(@RequestBody @Validated CreateLibraryDto libraryDto){
         return new ResponseEntity<>(service.addLibrary(libraryDto), HttpStatus.CREATED);

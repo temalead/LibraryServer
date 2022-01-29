@@ -9,7 +9,7 @@ import server.library.repository.LibraryRepository;
 @Service
 @RequiredArgsConstructor
 public class LibraryService {
-    private LibraryRepository repository;
+    private final LibraryRepository repository;
 
     public Library addLibrary(CreateLibraryDto libraryDto) {
         Library library = new Library();
