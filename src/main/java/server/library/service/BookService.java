@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import server.library.domain.Book;
+import server.library.domain.Genre;
 import server.library.domain.Library;
 import server.library.domain.dto.CreateBookDto;
 import server.library.exception.BookNotFoundException;
@@ -12,7 +13,9 @@ import server.library.repository.BookRepository;
 import server.library.repository.LibraryRepository;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -40,5 +43,9 @@ public class BookService {
     public Book getBookByName(String bookName) {
         Optional<Book> foundBook = bookRepository.findByNameStartsWith(bookName);
         return  foundBook.orElseThrow(()->new BookNotFoundException(bookName));
+    }
+
+    public void getBook(String name, Set<String> author, Set<Genre> genres, Date date_of_creation) {
+        
     }
 }
