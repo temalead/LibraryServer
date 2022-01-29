@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LibraryDto {
+public class FindLibraryDto {
     private long id;
 }

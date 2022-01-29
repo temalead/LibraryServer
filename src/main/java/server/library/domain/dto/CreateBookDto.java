@@ -3,9 +3,9 @@ package server.library.domain.dto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 import server.library.domain.Genre;
 
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -13,9 +13,12 @@ import java.util.Set;
 @Getter
 @EqualsAndHashCode
 public class CreateBookDto {
+    @NotNull
     private String name;
-    private LibraryDto libraryDto;
+    @NotNull
+    private FindLibraryDto findLibraryDto;
     private Set<Genre> genres;
+    @NotNull
     private Set<String> authors;
     private String description;
     private Set<String> publishers;

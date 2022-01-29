@@ -22,7 +22,7 @@ public class BookService {
 
     @Transactional
     public Book addBook(CreateBookDto bookDto){
-        long libraryId = bookDto.getLibraryDto().getId();
+        long libraryId = bookDto.getFindLibraryDto().getId();
         Library existingLibrary = libraryRepository.findById(libraryId)
                 .orElseThrow(()->new LibraryNotExistingException(libraryId));
         Book book = new Book()
