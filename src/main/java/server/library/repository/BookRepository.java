@@ -17,12 +17,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Optional<Book> findByName(String name);
 
-    Optional<Book> findByNameStartsWith(String name);
 
-    @Query("select b from Book b join b.authors author where author in(:authors) and b.name=(:name  ) " )
-    Optional<List<Book>> findByParams(@Param("name") String name, @Param("authors") Set<String> authors);
-
-    /*@Query("SELECT student FROM Student student INNER JOIN student.subjects subject WHERE subject IN (:subjects)")
-List<Student> findBySubjects(@Param("subjects") List<Subject> requestedSubjects)*/
-
+    @Query("select b from Book b join b.authors author where (:authors is null or author in(:authors))  and (:name is null or b.name=:name) " )
+    List<Book> findByParams(@Param("name") String name, @Param("authors") Set<String> authors);
 }

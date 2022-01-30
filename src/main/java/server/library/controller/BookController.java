@@ -26,9 +26,14 @@ public class BookController {
     }
 
 
-    @GetMapping(value = "/book",params = {"name","author"})
-    public ResponseEntity<List<Book>> getBookByNameAndAuthors(@RequestParam String name,
-                                                              @RequestParam Set<String> author){
-        return ResponseEntity.ok(bookService.getBook(name,author));
+    @GetMapping("/book")
+    public ResponseEntity<List<Book>> getBookByNameAndAuthors(@RequestParam(required = false) String name,
+                                                              @RequestParam(required = false) Set<String> authors){
+        return ResponseEntity.ok(bookService.getBook(name,authors));
+    }
+
+    @GetMapping("/book/s")
+    public ResponseEntity<Book> getBookByName(@RequestParam(required = false) String name){
+        return ResponseEntity.ok(bookService.getBookByName(name));
     }
 }
