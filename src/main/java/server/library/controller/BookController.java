@@ -6,11 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import server.library.domain.Book;
-import server.library.domain.Genre;
 import server.library.domain.dto.CreateBookDto;
 import server.library.service.BookService;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -28,12 +26,12 @@ public class BookController {
 
     @GetMapping("/search/params")
     public ResponseEntity<List<Book>> getBookByNameAndAuthors(@RequestParam(required = false) String name,
-                                                              @RequestParam(required = false) Set<String> authors){
-        return ResponseEntity.ok(bookService.getBook(name,authors));
+                                                              @RequestParam(required = false) Set<String> authors) throws NoSuchMethodException {
+        return ResponseEntity.ok(bookService.getBookByParams(name,authors));
     }
 
     @GetMapping("/search/genres")
-    public ResponseEntity<List<Book>> getBooksByGenres(@RequestParam Set<Genre> genres){
+    public ResponseEntity<List<Book>> getBooksByGenres(@RequestParam Set<String> genres) throws NoSuchMethodException {
         return ResponseEntity.ok(bookService.getBooksByGenres(genres));
     }
 }

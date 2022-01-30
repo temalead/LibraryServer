@@ -13,6 +13,7 @@ import server.library.repository.BookRepository;
 import server.library.repository.LibraryRepository;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -41,28 +42,41 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public Book getBookByName(String bookName) {
-        Optional<Book> foundBook = bookRepository.findByName(bookName);
-        return  foundBook.orElseThrow(()->new BookNotFoundException(bookName));
-    }
 
-    public List<Book> getBook(String name, Set<String> authors) {
+    @GetParameters(value="getBookByParams")
+    public List<Book> getBookByParams(String name, Set<String> authors) throws NoSuchMethodException {
+
         log.info("Searching for a book with name {} and authors {}",name,authors);
         List<Book>result = bookRepository.findByParams(name, authors);
-        return getBookList(name, result);
+
+        List<String> parameters = ParameterInterceptor.getParametersFromMethod(BookService.class, "getBookByParams");
+        List<Optional<Object>> list = List.of(Optional.ofNullable(name), Optional.ofNullable(authors));
+
+        return getBooks(result,MessageErrorCreator.makeErrorMessage(parameters,list));
     }
 
-    private List<Book> getBookList(String name, List<Book> result) {
-        if (!(result.size()==0)){
+
+
+    @GetParameters(value = "getBooksByGenres")
+    public List<Book> getBooksByGenres(Set<String> genres) throws NoSuchMethodException {
+        Set<Genre> genreSet = Genre.filterRequestGenres(genres);
+
+        List<Book> result = bookRepository.findByGenres(genreSet);
+
+        List<String> parameters = ParameterInterceptor.getParametersFromMethod(BookService.class, "getBooksByGenres");
+        List<Optional<Object>> list = List.of(Optional.of(genres));
+
+
+        return getBooks(result,MessageErrorCreator.makeErrorMessage(parameters, list));
+    }
+
+
+    private List<Book> getBooks( List<Book> result, String params) {
+        if (result.size()!=0){
             return result;
-        }else{
-            throw new BookNotFoundException(name);
         }
-    }
-
-    public List<Book> getBooksByGenres(Set<Genre> genres) {
-        List<Book> result = bookRepository.findByGenres(genres);
-        log.info("Finding books with genres {}",genres.toString());
-        return getBookList(genres.toString(), result);
+        else{
+            throw new BookNotFoundException(params);
+        }
     }
 }

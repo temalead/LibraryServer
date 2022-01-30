@@ -9,6 +9,12 @@ plugins {
 compileJava{
     options.release= 11
 }
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-parameters"
+    }
+}
 flyway{
     url = 'jdbc:postgresql://localhost:5432/library'
     user = 'postgres'

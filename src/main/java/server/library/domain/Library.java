@@ -8,6 +8,8 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.List;
 
 

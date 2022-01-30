@@ -14,6 +14,8 @@ public class LibraryService {
     public Library addLibrary(CreateLibraryDto libraryDto) {
         Library library = new Library();
         library.setAddress(libraryDto.getAddress());
+
+        repository.save(library);
         return library;
     }
 }
