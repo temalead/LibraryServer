@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import server.library.domain.Book;
+import server.library.domain.Genre;
 import server.library.domain.Library;
 import server.library.domain.dto.CreateBookDto;
 import server.library.exception.BookNotFoundException;
@@ -48,6 +49,10 @@ public class BookService {
     public List<Book> getBook(String name, Set<String> authors) {
         log.info("Searching for a book with name {} and authors {}",name,authors);
         List<Book>result = bookRepository.findByParams(name, authors);
+        return getBookList(name, result);
+    }
+
+    private List<Book> getBookList(String name, List<Book> result) {
         if (!(result.size()==0)){
             return result;
         }else{
@@ -55,4 +60,9 @@ public class BookService {
         }
     }
 
+    public List<Book> getBooksByGenres(Set<Genre> genres) {
+        List<Book> result = bookRepository.findByGenres(genres);
+        log.info("Finding books with genres {}",genres.toString());
+        return getBookList(genres.toString(), result);
+    }
 }
