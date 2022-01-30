@@ -11,6 +11,7 @@ import server.library.domain.dto.CreateBookDto;
 import server.library.service.BookService;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -25,13 +26,9 @@ public class BookController {
     }
 
 
-    @GetMapping(value = "/book",params = {"name","author","genres","date_of_creation"})
-    public ResponseEntity<Book> getBookByParams(@RequestParam String name,
-                                              @RequestParam Set<String> author,
-                                              @RequestParam Set<Genre> genres,
-                                              @RequestParam Date date_of_creation){
-
-        bookService.getBook(name,author,genres,date_of_creation);
-        return null;
+    @GetMapping(value = "/book",params = {"name","author"})
+    public ResponseEntity<List<Book>> getBookByNameAndAuthors(@RequestParam String name,
+                                                              @RequestParam Set<String> author){
+        return ResponseEntity.ok(bookService.getBook(name,author));
     }
 }

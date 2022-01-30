@@ -14,6 +14,7 @@ import server.library.repository.LibraryRepository;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -45,7 +46,7 @@ public class BookService {
         return  foundBook.orElseThrow(()->new BookNotFoundException(bookName));
     }
 
-    public void getBook(String name, Set<String> author, Set<Genre> genres, Date date_of_creation) {
-        
+    public List<Book> getBook(String name, Set<String> authors) {
+        return bookRepository.findByParams(name,authors).orElseThrow(()->new BookNotFoundException(name));
     }
 }
