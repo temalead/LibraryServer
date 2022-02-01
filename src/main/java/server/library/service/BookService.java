@@ -13,7 +13,6 @@ import server.library.repository.BookRepository;
 import server.library.repository.LibraryRepository;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -59,6 +58,8 @@ public class BookService {
 
     @GetParameters(value = "getBooksByGenres")
     public List<Book> getBooksByGenres(Set<String> genres) throws NoSuchMethodException {
+        log.info("Searching for a books with genres {}",genres);
+
         Set<Genre> genreSet = Genre.filterRequestGenres(genres);
 
         List<Book> result = bookRepository.findByGenres(genreSet);
