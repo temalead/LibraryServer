@@ -5,12 +5,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.Type;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -54,12 +52,25 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "id=" + id +
-                "library="+library.getId()+
+                ", library="+library.getId()+
                 ", genres=" + genres +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", publishers=" + publishers +
                 ", dateOfCreation=" + dateOfCreation +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return isBestseller == book.isBestseller && Objects.equals(id, book.id) && Objects.equals(library, book.library) && Objects.equals(genres, book.genres) && Objects.equals(name, book.name) && Objects.equals(authors, book.authors) && Objects.equals(description, book.description) && Objects.equals(publishers, book.publishers) && Objects.equals(dateOfCreation, book.dateOfCreation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, library, genres, name, authors, description, publishers, dateOfCreation, isBestseller);
     }
 }

@@ -3,6 +3,7 @@ package server.library.domain.dto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import server.library.domain.Genre;
 
 import javax.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Setter
 @Getter
 @EqualsAndHashCode
+@Accessors(chain = true)
 public class CreateBookDto {
     @NotNull
     private String name;

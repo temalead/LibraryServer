@@ -38,7 +38,8 @@ public class BookService {
                 .setDescription(bookDto.getDescription())
                 .setDateOfCreation(bookDto.getDateOfCreation());
         log.info("Added new book with name{} in library {}",book.getName(),book.getLibrary().getId());
-        return bookRepository.save(book);
+        bookRepository.save(book);
+        return book;
     }
 
 
