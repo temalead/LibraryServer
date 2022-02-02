@@ -9,11 +9,13 @@ import server.library.domain.Book;
 import server.library.domain.Genre;
 import server.library.domain.Library;
 import server.library.domain.dto.CreateBookDto;
+import server.library.domain.dto.UpdateBookDto;
 import server.library.exception.BookNotFoundException;
 import server.library.exception.LibraryNotExistingException;
 import server.library.repository.BookRepository;
 import server.library.repository.LibraryRepository;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,11 +31,11 @@ class BookServiceTest {
     private BookRepository bookRepository;
     @Mock
     private LibraryRepository libraryRepository;
-    private BookService bookService;
+    private BookServiceImpl bookService;
 
     @BeforeEach
     void setUp() {
-        bookService = new BookService(bookRepository, libraryRepository);
+        bookService = new BookServiceImpl(bookRepository, libraryRepository);
     }
 
     @Test
@@ -96,5 +98,33 @@ class BookServiceTest {
 
         List<Book> result = bookService.getBooksByGenres(Set.of("NOVEL"));
         assertEquals(List.of(existingBook), result);
+    }
+
+    @Test
+    void shouldReturnUpdatedBook() {
+        Book book = new Book()
+                .setId(1L)
+                .setName("Seller")
+                .setAuthors(Set.of("Phil Night"));
+
+        UpdateBookDto updateBookDto = new UpdateBookDto()
+                .setAuthors(Set.of("Pheel"))
+                .setDescription("Bla-bla")
+                .setBestseller(true)
+                .setDate(Date.valueOf("1988-01-01"));
+        Book expected = book
+                .setAuthors(Set.of("Pheel"))
+                .setDescription("Bla-bla")
+                .setBestseller(true)
+                .setDateOfCreation(Date.valueOf("1988-01-01"));
+
+        when(bookRepository.findById(any())).thenReturn(Optional.of(book));
+
+        Book updateBook = bookService.updateBook(book.getId(), updateBookDto);
+
+        assertEquals(expected, updateBook);
+
+        verify(bookRepository).findById(book.getId());
+
     }
 }

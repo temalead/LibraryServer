@@ -12,7 +12,7 @@ public class BookServiceParameterInterceptor {
     public static List<String> getParametersFromMethod(String methodName) throws NoSuchMethodException {
         List<String> parameters = new ArrayList<>();
 
-        Method[] methods = BookService.class.getDeclaredMethods();
+        Method[] methods = BookServiceImpl.class.getDeclaredMethods();
         for (Method method : methods) {
             if (method.getName().equals(methodName)) {
                 for (Parameter p : method.getParameters()) {
