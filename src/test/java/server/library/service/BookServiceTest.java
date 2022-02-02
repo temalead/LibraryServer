@@ -30,8 +30,6 @@ class BookServiceTest {
     private BookRepository bookRepository;
     @Mock
     private LibraryRepository libraryRepository;
-    @Mock
-    private MessageErrorCreator messageErrorCreator;
     private BookService bookService;
 
     @BeforeEach
@@ -86,9 +84,9 @@ class BookServiceTest {
 
     @Test
     void shouldReturnBookNotFoundExceptionCauseParams() {
-        when(bookRepository.findByParams("Not",Set.of("Today"))).thenReturn(List.of());
+        when(bookRepository.findByParams("Not", Set.of("Today"))).thenReturn(List.of());
 
-        assertThrows(BookNotFoundException.class,()->bookService.getBookByParams("Not",Set.of("Today")));
+        assertThrows(BookNotFoundException.class, () -> bookService.getBookByParams("Not", Set.of("Today")));
     }
 
     @Test
@@ -98,6 +96,6 @@ class BookServiceTest {
         when(bookRepository.findByGenres(Set.of(Genre.NOVEL))).thenReturn(List.of(existingBook));
 
         List<Book> result = bookService.getBooksByGenres(Set.of("NOVEL"));
-        assertEquals(List.of(existingBook),result);
+        assertEquals(List.of(existingBook), result);
     }
 }

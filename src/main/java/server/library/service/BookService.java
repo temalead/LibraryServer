@@ -43,22 +43,16 @@ public class BookService {
     }
 
 
-    @GetParameters(value="getBookByParams")
     public List<Book> getBookByParams(String name, Set<String> authors) throws NoSuchMethodException {
 
         log.info("Searching for a book with name {} and authors {}",name,authors);
         List<Book>result = bookRepository.findByParams(name, authors);
 
-        List<String> keysOfParameters = ParameterInterceptor.getParametersFromMethod(BookService.class, "getBookByParams");
-        List<Optional<Object>> valuesOfParameters = List.of(Optional.ofNullable(name), Optional.ofNullable(authors));
-        log.info("Got keys parameters {} with values {}",keysOfParameters,valuesOfParameters);
-
-        return getBooks(result,MessageErrorCreator.makeErrorMessage(keysOfParameters,valuesOfParameters));
+        return getBooks(result,MessageErrorCreator.makeErrorMessage("getBookByParams",List.of(Optional.ofNullable(name), Optional.ofNullable(authors))));
     }
 
 
 
-    @GetParameters(value = "getBooksByGenres")
     public List<Book> getBooksByGenres(Set<String> genres) throws NoSuchMethodException {
         log.info("Searching for a books with genres {}",genres);
 
@@ -66,12 +60,8 @@ public class BookService {
 
         List<Book> result = bookRepository.findByGenres(genreSet);
 
-        List<String> keysOfParameters = ParameterInterceptor.getParametersFromMethod(BookService.class, "getBooksByGenres");
-        List<Optional<Object>> valuesOfParameters = List.of(Optional.of(genres));
-        log.info("Got keys parameters {} with values {}",keysOfParameters,valuesOfParameters);
 
-
-        return getBooks(result,MessageErrorCreator.makeErrorMessage(keysOfParameters, valuesOfParameters));
+        return getBooks(result,MessageErrorCreator.makeErrorMessage("getBooksByGenres", List.of(Optional.of(genres))));
     }
 
 
