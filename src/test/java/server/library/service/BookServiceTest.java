@@ -4,19 +4,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import server.library.domain.Book;
+import server.library.domain.Genre;
 import server.library.domain.Library;
 import server.library.domain.dto.CreateBookDto;
+import server.library.exception.BookNotFoundException;
 import server.library.exception.LibraryNotExistingException;
 import server.library.repository.BookRepository;
 import server.library.repository.LibraryRepository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -27,6 +30,8 @@ class BookServiceTest {
     private BookRepository bookRepository;
     @Mock
     private LibraryRepository libraryRepository;
+    @Mock
+    private MessageErrorCreator messageErrorCreator;
     private BookService bookService;
 
     @BeforeEach
@@ -69,10 +74,30 @@ class BookServiceTest {
 
 
     @Test
-    void getBookByParams() {
+    void shouldReturnExistingBook() throws NoSuchMethodException {
+        Book existingBook = new Book().setName("Bible")
+                .setAuthors(Set.of("God"));
+        when(bookRepository.findByParams(existingBook.getName(), existingBook.getAuthors()))
+                .thenReturn(List.of(existingBook));
+
+        List<Book> bookByParams = bookService.getBookByParams(existingBook.getName(), existingBook.getAuthors());
+        assertEquals(List.of(existingBook), bookByParams);
     }
 
     @Test
-    void getBooksByGenres() {
+    void shouldReturnBookNotFoundExceptionCauseParams() {
+        when(bookRepository.findByParams("Not",Set.of("Today"))).thenReturn(List.of());
+
+        assertThrows(BookNotFoundException.class,()->bookService.getBookByParams("Not",Set.of("Today")));
+    }
+
+    @Test
+    void getBooksByGenres() throws NoSuchMethodException {
+        Book existingBook = new Book()
+                .setGenres(Set.of(Genre.NOVEL));
+        when(bookRepository.findByGenres(Set.of(Genre.NOVEL))).thenReturn(List.of(existingBook));
+
+        List<Book> result = bookService.getBooksByGenres(Set.of("NOVEL"));
+        assertEquals(List.of(existingBook),result);
     }
 }

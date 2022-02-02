@@ -4,10 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ParameterInterceptorTest {
+class MessageErrorCreatorTest {
 
     @Test
-    void getParametersFromMethod() {
+    void makeErrorMessage() {
     }
-
 }

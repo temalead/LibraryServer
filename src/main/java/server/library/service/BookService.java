@@ -49,10 +49,11 @@ public class BookService {
         log.info("Searching for a book with name {} and authors {}",name,authors);
         List<Book>result = bookRepository.findByParams(name, authors);
 
-        List<String> parameters = ParameterInterceptor.getParametersFromMethod(BookService.class, "getBookByParams");
-        List<Optional<Object>> list = List.of(Optional.ofNullable(name), Optional.ofNullable(authors));
+        List<String> keysOfParameters = ParameterInterceptor.getParametersFromMethod(BookService.class, "getBookByParams");
+        List<Optional<Object>> valuesOfParameters = List.of(Optional.ofNullable(name), Optional.ofNullable(authors));
+        log.info("Got keys parameters {} with values {}",keysOfParameters,valuesOfParameters);
 
-        return getBooks(result,MessageErrorCreator.makeErrorMessage(parameters,list));
+        return getBooks(result,MessageErrorCreator.makeErrorMessage(keysOfParameters,valuesOfParameters));
     }
 
 
@@ -65,20 +66,21 @@ public class BookService {
 
         List<Book> result = bookRepository.findByGenres(genreSet);
 
-        List<String> parameters = ParameterInterceptor.getParametersFromMethod(BookService.class, "getBooksByGenres");
-        List<Optional<Object>> list = List.of(Optional.of(genres));
+        List<String> keysOfParameters = ParameterInterceptor.getParametersFromMethod(BookService.class, "getBooksByGenres");
+        List<Optional<Object>> valuesOfParameters = List.of(Optional.of(genres));
+        log.info("Got keys parameters {} with values {}",keysOfParameters,valuesOfParameters);
 
 
-        return getBooks(result,MessageErrorCreator.makeErrorMessage(parameters, list));
+        return getBooks(result,MessageErrorCreator.makeErrorMessage(keysOfParameters, valuesOfParameters));
     }
 
 
-    private List<Book> getBooks( List<Book> result, String params) {
+    private List<Book> getBooks(List<Book> result, String possibleError) {
         if (result.size()!=0){
             return result;
         }
         else{
-            throw new BookNotFoundException(params);
+            throw new BookNotFoundException(possibleError);
         }
     }
 }
