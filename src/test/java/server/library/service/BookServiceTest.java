@@ -14,7 +14,6 @@ import server.library.exception.LibraryNotExistingException;
 import server.library.repository.BookRepository;
 import server.library.repository.LibraryRepository;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -78,7 +77,7 @@ class BookServiceTest {
         when(bookRepository.findByParams(existingBook.getName(), existingBook.getAuthors()))
                 .thenReturn(List.of(existingBook));
 
-        List<Book> bookByParams = bookService.getBookByParams(existingBook.getName(), existingBook.getAuthors());
+        List<Book> bookByParams = bookService.getBooksByParams(existingBook.getName(), existingBook.getAuthors());
         assertEquals(List.of(existingBook), bookByParams);
     }
 
@@ -86,7 +85,7 @@ class BookServiceTest {
     void shouldReturnBookNotFoundExceptionCauseParams() {
         when(bookRepository.findByParams("Not", Set.of("Today"))).thenReturn(List.of());
 
-        assertThrows(BookNotFoundException.class, () -> bookService.getBookByParams("Not", Set.of("Today")));
+        assertThrows(BookNotFoundException.class, () -> bookService.getBooksByParams("Not", Set.of("Today")));
     }
 
     @Test

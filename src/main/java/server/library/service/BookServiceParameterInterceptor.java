@@ -1,11 +1,14 @@
 package server.library.service;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ParameterInterceptor {
+@Slf4j
+public class BookServiceParameterInterceptor {
     public static List<String> getParametersFromMethod(String methodName) throws NoSuchMethodException {
         List<String> parameters = new ArrayList<>();
 
@@ -19,6 +22,7 @@ public final class ParameterInterceptor {
                 }
             }
         }
+        log.info("Got {} from {}",parameters,methodName);
         return parameters;
     }
 }

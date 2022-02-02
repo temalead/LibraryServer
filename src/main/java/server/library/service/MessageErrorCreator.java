@@ -8,10 +8,10 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-public final class MessageErrorCreator {
+public class MessageErrorCreator {
 
     public static String makeErrorMessage(String methodName, List<Optional<Object>> values) throws NoSuchMethodException {
-        List<String> parameters = ParameterInterceptor.getParametersFromMethod(methodName);
+        List<String> parameters = BookServiceParameterInterceptor.getParametersFromMethod(methodName);
         Map<String, String> map=new HashMap<>();
         for (int i = 0; i < parameters.size(); i++) {
             if (values.get(i).isEmpty()) {

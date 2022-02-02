@@ -43,12 +43,12 @@ public class BookService {
     }
 
 
-    public List<Book> getBookByParams(String name, Set<String> authors) throws NoSuchMethodException {
+    public List<Book> getBooksByParams(String name, Set<String> authors) throws NoSuchMethodException {
 
         log.info("Searching for a book with name {} and authors {}",name,authors);
         List<Book>result = bookRepository.findByParams(name, authors);
 
-        return getBooks(result,MessageErrorCreator.makeErrorMessage("getBookByParams",List.of(Optional.ofNullable(name), Optional.ofNullable(authors))));
+        return getBooks(result,MessageErrorCreator.makeErrorMessage("getBooksByParams",List.of(Optional.ofNullable(name), Optional.ofNullable(authors))));
     }
 
 
