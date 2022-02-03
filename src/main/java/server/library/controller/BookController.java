@@ -9,9 +9,7 @@ import server.library.domain.Book;
 import server.library.domain.dto.CreateBookDto;
 import server.library.domain.dto.UpdateBookDto;
 import server.library.service.BookService;
-import server.library.service.BookServiceImpl;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +36,7 @@ public class BookController {
         return ResponseEntity.ok(bookService.getBooksByGenres(genres));
     }
 
-    @PostMapping("/book/{id}")
+    @PutMapping("/book/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable("id") Long id,
                                            @RequestBody UpdateBookDto book){
         return ResponseEntity.ok(bookService.updateBook(id,book));

@@ -24,4 +24,17 @@ public class UpdateBookDto {
     private Date date;
     private Set<String> publishers;
 
+
+    @Override
+    public String toString() {
+        return "UpdateBookDto{" +
+                "name='" + name + '\'' +
+                ", authors=" + authors +
+                ", genres=" + genres +
+                ", description='" + description + '\'' +
+                ", isBestseller=" + isBestseller +
+                ", date=" + date +
+                ", publishers=" + publishers +
+                '}';
+    }
 }

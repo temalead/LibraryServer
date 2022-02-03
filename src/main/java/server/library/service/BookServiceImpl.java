@@ -67,16 +67,17 @@ public class BookServiceImpl implements BookService{
 
     @Transactional
     @Override
-    public Book updateBook(Long id, UpdateBookDto book) {
+    public Book updateBook(Long id, UpdateBookDto requestBook) {
         Book updatableBook = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(String.valueOf(id)));
-        updatableBook.setName(book.getName())
-                .setAuthors(book.getAuthors())
-                .setGenres(book.getGenres())
-                .setDescription(book.getDescription())
-                .setBestseller(book.isBestseller())
-                .setDateOfCreation(book.getDate())
-                .setPublishers(book.getPublishers());
+        updatableBook.setName(requestBook.getName())
+                .setAuthors(requestBook.getAuthors())
+                .setGenres(requestBook.getGenres())
+                .setDescription(requestBook.getDescription())
+                .setBestseller(requestBook.isBestseller())
+                .setDateOfCreation(requestBook.getDate())
+                .setPublishers(requestBook.getPublishers());
 
+        log.info("Updated book with id {} to {}", id,requestBook);
         return updatableBook;
     }
 

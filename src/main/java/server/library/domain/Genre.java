@@ -34,7 +34,4 @@ public enum Genre {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
     }
-
-
-
 }
