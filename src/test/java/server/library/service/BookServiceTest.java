@@ -3,6 +3,7 @@ package server.library.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import server.library.domain.Book;
@@ -31,12 +32,9 @@ class BookServiceTest {
     private BookRepository bookRepository;
     @Mock
     private LibraryRepository libraryRepository;
-    private BookServiceImpl bookService;
 
-    @BeforeEach
-    void setUp() {
-        bookService = new BookServiceImpl(bookRepository, libraryRepository);
-    }
+    @InjectMocks
+    private BookServiceImpl bookService;
 
     @Test
     void shouldReturnNewBook() {

@@ -39,6 +39,6 @@ public class BookController {
     @PutMapping("/book/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable("id") Long id,
                                            @RequestBody UpdateBookDto book){
-        return ResponseEntity.ok(bookService.updateBook(id,book));
+        return new ResponseEntity<>(bookService.updateBook(id,book),HttpStatus.OK);
     }
 }
