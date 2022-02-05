@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import server.library.exception.BookNotFoundException;
 import server.library.exception.LibraryNotExistingException;
 
+import java.net.BindException;
+
 @RestControllerAdvice
 @Slf4j
 public class ExceptionHandlerController {

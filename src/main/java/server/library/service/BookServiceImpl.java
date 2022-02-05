@@ -26,21 +26,21 @@ public class BookServiceImpl implements BookService{
     private final LibraryRepository libraryRepository;
 
     @Transactional
-    public Book addBook(CreateBookDto bookDto){
-        long libraryId = bookDto.getLibrary();
+    public Book addBook(CreateBookDto book){
+        long libraryId = book.getLibrary();
         Library existingLibrary = libraryRepository.findById(libraryId)
                 .orElseThrow(()->new LibraryNotExistingException(libraryId));
-        Book book = new Book()
-                .setName(bookDto.getName())
+        Book newBook = new Book()
+                .setName(book.getName())
                 .setLibrary(existingLibrary)
-                .setGenres(bookDto.getGenres())
-                .setAuthors(bookDto.getAuthors())
-                .setPublishers(bookDto.getPublishers())
-                .setDescription(bookDto.getDescription())
-                .setDateOfCreation(bookDto.getDateOfCreation());
-        log.info("Added new book with name{} in library {}",book.getName(),book.getLibrary().getId());
-        bookRepository.save(book);
-        return book;
+                .setGenres(book.getGenres())
+                .setAuthors(book.getAuthors())
+                .setPublishers(book.getPublishers())
+                .setDescription(book.getDescription())
+                .setDateOfCreation(book.getDateOfCreation());
+        log.info("Added new book with name {} in libraryId {}",newBook.getName(),newBook.getLibrary().getId());
+        bookRepository.save(newBook);
+        return newBook;
     }
 
 

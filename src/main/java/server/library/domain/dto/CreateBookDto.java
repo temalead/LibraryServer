@@ -19,9 +19,10 @@ public class CreateBookDto {
     private String name;
     @NotNull
     private Long library;
-    private Set<Genre> genres;
     @NotNull
     private Set<String> authors;
+
+    private Set<Genre> genres;
     private String description;
     private Set<String> publishers;
     private boolean isBestseller;

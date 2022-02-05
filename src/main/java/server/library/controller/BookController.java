@@ -28,7 +28,7 @@ public class BookController {
     @GetMapping("/search/params")
     public ResponseEntity<List<Book>> getBookByNameAndAuthors(@RequestParam(required = false) String name,
                                                               @RequestParam(required = false) Set<String> authors) throws NoSuchMethodException {
-        return ResponseEntity.ok(bookService.getBooksByParams(name,authors));
+        return ResponseEntity.ok(bookService.getBooksByParams(name, authors));
     }
 
     @GetMapping("/search/genres")
@@ -38,7 +38,7 @@ public class BookController {
 
     @PutMapping("/book/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable("id") Long id,
-                                           @RequestBody UpdateBookDto book){
-        return new ResponseEntity<>(bookService.updateBook(id,book),HttpStatus.OK);
+                                           @RequestBody UpdateBookDto book) {
+        return new ResponseEntity<>(bookService.updateBook(id, book), HttpStatus.OK);
     }
 }

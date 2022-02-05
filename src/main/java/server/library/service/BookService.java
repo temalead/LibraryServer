@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface BookService {
-    Book addBook(CreateBookDto bookDto);
+    Book addBook(CreateBookDto book);
 
     List<Book> getBooksByParams(String name, Set<String> authors) throws NoSuchMethodException;
 
