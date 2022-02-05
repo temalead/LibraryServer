@@ -1,6 +1,5 @@
 LibraryServer
 ---
-###About
 Server allows you to upload and download books to the library.
 You can create your own library
 
