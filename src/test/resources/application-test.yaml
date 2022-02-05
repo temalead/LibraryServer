@@ -6,7 +6,5 @@ spring:
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
   jpa:
     open-in-view: false
-    hibernate:
-      ddl-auto: create
   flyway:
-    enabled: false
+    locations: classpath:test/migration
