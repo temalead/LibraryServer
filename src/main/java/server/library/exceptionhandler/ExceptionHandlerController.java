@@ -1,4 +1,4 @@
-package server.library.controller.exceptionhandler;
+package server.library.exceptionhandler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import server.library.exception.BookNotFoundException;
+import server.library.exception.LibraryExistByAddressException;
 import server.library.exception.LibraryNotExistingException;
 
 import java.net.BindException;
@@ -20,5 +21,11 @@ public class ExceptionHandlerController {
     public ResponseEntity<String> throwNotFoundExceptionToUser(RuntimeException ex) {
         log.error(ex.getMessage());
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.valueOf(404));
+    }
+
+    @ExceptionHandler(LibraryExistByAddressException.class)
+    public ResponseEntity<String> throwForbiddenLibrary(RuntimeException e){
+        log.error(e.getMessage());
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.FORBIDDEN);
     }
 }

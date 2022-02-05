@@ -23,7 +23,7 @@ class LibraryServiceTest {
     @Mock
     private LibraryRepository repository;
     @InjectMocks
-    private LibraryService service;
+    private LibraryServiceImpl service;
 
     @Test
     @DisplayName("Should Create NewLibrary")
