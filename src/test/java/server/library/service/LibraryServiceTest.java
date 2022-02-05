@@ -1,5 +1,6 @@
 package server.library.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,6 +26,7 @@ class LibraryServiceTest {
     private LibraryService service;
 
     @Test
+    @DisplayName("Should Create NewLibrary")
     void shouldCreateNewLibrary() {
         CreateLibraryDto newLib = new CreateLibraryDto()
                 .setAddress(new Address());
@@ -32,6 +34,7 @@ class LibraryServiceTest {
         assertEquals(newLib,result);
     }
     @Test
+    @DisplayName("Should Throw LibraryExistByAddressException")
     void shouldThrowLibraryExistByAddressException(){
         Address address = new Address();
         CreateLibraryDto dto = new CreateLibraryDto()

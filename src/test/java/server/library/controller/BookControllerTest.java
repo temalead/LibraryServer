@@ -2,14 +2,18 @@ package server.library.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.http.MediaType;
 import server.library.domain.Book;
 import server.library.domain.dto.CreateBookDto;
+import server.library.repository.LibraryRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -17,13 +21,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class BookControllerTest extends SpringTestConfig {
 
+    @Mock
+    private LibraryRepository libraryRepository;
+    private final String url = "/library";
+
 
     @Test
-    @DisplayName("Should Return books")
+    @DisplayName("Should Return books By CorrectParameters Name and Author")
     void shouldReturnBooksByCorrectParametersNameAndAuthor() throws Exception {
         String request = "?author=Test&name=Test";
 
-        String response = mvc.perform(get("/library/search".concat(request)))
+        String response = mvc.perform(get(url.concat("/search").concat(request)))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         List<Book> responseBooks = mapToBookList(response);
@@ -32,32 +40,52 @@ class BookControllerTest extends SpringTestConfig {
     }
 
     @Test
+    @DisplayName("Should Return NewBook")
     void shouldReturnNewBook() throws Exception {
-        CreateBookDto requestedBook = new CreateBookDto()
+        CreateBookDto request = new CreateBookDto()
                 .setLibrary(1L)
-                .setName("test")
-                .setAuthors(Set.of("test"));
+                .setName("TestB")
+                .setAuthors(Set.of("TestB"));
 
-        mvc.perform(post("/library")
+        String response = mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapToJson(requestedBook)))
-                .andExpect(status().is2xxSuccessful());
-    }
-
-    @Test
-    void shouldReturnLibraryNotFoundException() throws Exception {
-        CreateBookDto requestedBook = new CreateBookDto()
-                .setLibrary(1337L)
-                .setName("test")
-                .setAuthors(Set.of("test"));
-        String response = mvc.perform(post("/library")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapToJson(requestedBook)))
+                        .content(mapToJson(request)))
+                .andExpect(status().is2xxSuccessful())
                 .andReturn().getResponse().getContentAsString();
+        Book responseBook = mapToBook(response);
+
+        assertEquals(request.getName(), responseBook.getName());
+    }
+
+    @Test
+    @DisplayName("Should Return LibraryNotFoundException")
+    void shouldReturnLibraryNotFoundException() throws Exception {
+        CreateBookDto request = new CreateBookDto()
+                .setLibrary(1337L)
+                .setName("TestB")
+                .setAuthors(Set.of("TestB"));
+        when(libraryRepository.findById(1337L)).thenReturn(Optional.empty());
+
+        mvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapToJson(request)))
+                .andExpect(status().isNotFound());
+
     }
 
 
     @Test
-    void getBooksByGenres() {
+    @DisplayName("Should Return Books By Correct Genres")
+    void shouldReturnBooksByCorrectGenres() throws Exception {
+
+
+        String response = mvc.perform(get(url.concat("/search/genres?genres=NOVEL")))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        List<Book> books = mapToBookList(response);
+
+        assertEquals(1,books.size());
+
     }
 }

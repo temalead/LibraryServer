@@ -1,6 +1,6 @@
 package server.library.service;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,6 +37,7 @@ class BookServiceTest {
     private BookServiceImpl bookService;
 
     @Test
+    @DisplayName("Should Return New Book")
     void shouldReturnNewBook() {
         Library library = new Library().setId(1L);
         CreateBookDto createBookDto = new CreateBookDto();
@@ -57,6 +58,7 @@ class BookServiceTest {
     }
 
     @Test
+    @DisplayName("Should Throw Library NotExisting Exception")
     void shouldThrowLibraryNotExistingException() {
         CreateBookDto createdBook = new CreateBookDto()
                 .setLibrary(1337L)
@@ -71,6 +73,7 @@ class BookServiceTest {
 
 
     @Test
+    @DisplayName("Should Return Existing Book")
     void shouldReturnExistingBook() throws NoSuchMethodException {
         Book existingBook = new Book().setName("Bible")
                 .setAuthors(Set.of("God"));
@@ -82,6 +85,7 @@ class BookServiceTest {
     }
 
     @Test
+    @DisplayName("Should Return Book NotFound Exception Cause Params")
     void shouldReturnBookNotFoundExceptionCauseParams() {
         when(bookRepository.findByParams("Not", Set.of("Today"))).thenReturn(List.of());
 
@@ -89,7 +93,8 @@ class BookServiceTest {
     }
 
     @Test
-    void getBooksByGenres() throws NoSuchMethodException {
+    @DisplayName("Should Return Books By Genres")
+    void shouldReturnBooksByGenres() throws NoSuchMethodException {
         Book existingBook = new Book()
                 .setGenres(Set.of(Genre.NOVEL));
         when(bookRepository.findByGenres(Set.of(Genre.NOVEL))).thenReturn(List.of(existingBook));
@@ -99,6 +104,7 @@ class BookServiceTest {
     }
 
     @Test
+    @DisplayName("Should Return UpdatedBook")
     void shouldReturnUpdatedBook() {
         Book book = new Book()
                 .setId(1L)

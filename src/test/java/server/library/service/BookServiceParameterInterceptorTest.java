@@ -1,5 +1,6 @@
 package server.library.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -12,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BookServiceParameterInterceptorTest {
 
     @Test
-    void getParametersFromMethod() throws NoSuchMethodException {
+    @DisplayName("Should return parameters")
+    void shouldReturnParametersOfBookServiceMethod() throws NoSuchMethodException {
         String request = "getBooksByParams";
         List<String> list = List.of("name", "authors");
 

@@ -38,4 +38,8 @@ public abstract class SpringTestConfig {
         Book[] books = gson.fromJson(source, Book[].class);
         return List.of(books);
     }
+
+    protected Book mapToBook(String source) {
+        return gson.fromJson(source, Book.class);
+    }
 }
