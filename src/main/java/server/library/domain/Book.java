@@ -1,6 +1,7 @@
 package server.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 @Entity
 @RequiredArgsConstructor
+@EqualsAndHashCode
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -59,18 +61,5 @@ public class Book {
                 ", publishers=" + publishers +
                 ", dateOfCreation=" + dateOfCreation +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return isBestseller == book.isBestseller && Objects.equals(id, book.id) && Objects.equals(library, book.library) && Objects.equals(genres, book.genres) && Objects.equals(name, book.name) && Objects.equals(authors, book.authors) && Objects.equals(description, book.description) && Objects.equals(publishers, book.publishers) && Objects.equals(dateOfCreation, book.dateOfCreation);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, library, genres, name, authors, description, publishers, dateOfCreation, isBestseller);
     }
 }

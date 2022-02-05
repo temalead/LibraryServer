@@ -1,33 +1,34 @@
 package server.library.controller;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import server.library.domain.Book;
 import server.library.domain.dto.CreateBookDto;
 
+import java.util.List;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class BookControllerTest extends SpringTestConfig{
-
-
+class BookControllerTest extends SpringTestConfig {
 
 
     @Test
+    @DisplayName("Should Return books")
     void shouldReturnBooksByCorrectParametersNameAndAuthor() throws Exception {
-        String request="?author=Test&name=Test";
+        String request = "?author=Test&name=Test";
 
-        String response = mvc.perform(get("/library/search/params".concat(request)))
-                .andDo(print())
+        String response = mvc.perform(get("/library/search".concat(request)))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        System.out.println(response);
-
-
+        List<Book> responseBooks = mapToBookList(response);
+        List<Book> expectedBooks = session.createQuery("select b from Book b where b.name='Test'").getResultList();
+        assertEquals(expectedBooks.size(),responseBooks.size());
     }
 
     @Test
@@ -38,8 +39,8 @@ class BookControllerTest extends SpringTestConfig{
                 .setAuthors(Set.of("test"));
 
         mvc.perform(post("/library")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapToJson(requestedBook)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapToJson(requestedBook)))
                 .andExpect(status().is2xxSuccessful());
     }
 
@@ -54,7 +55,6 @@ class BookControllerTest extends SpringTestConfig{
                         .content(mapToJson(requestedBook)))
                 .andReturn().getResponse().getContentAsString();
     }
-
 
 
     @Test

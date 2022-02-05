@@ -19,7 +19,7 @@ public class LibraryController {
     private final LibraryService service;
 
     @PostMapping("/new")
-    public ResponseEntity<Library> addLibrary(@RequestBody @Validated CreateLibraryDto libraryDto){
+    public ResponseEntity<CreateLibraryDto> addLibrary(@RequestBody @Validated CreateLibraryDto libraryDto){
         return new ResponseEntity<>(service.addLibrary(libraryDto), HttpStatus.CREATED);
     }
 }

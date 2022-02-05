@@ -25,7 +25,7 @@ public class BookController {
     }
 
 
-    @GetMapping("/search/params")
+    @GetMapping("/search")
     public ResponseEntity<List<Book>> getBookByNameAndAuthors(@RequestParam(required = false) String name,
                                                               @RequestParam(required = false) Set<String> authors) throws NoSuchMethodException {
         return ResponseEntity.ok(bookService.getBooksByParams(name, authors));

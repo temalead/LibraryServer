@@ -1,6 +1,7 @@
 package server.library.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
@@ -8,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 public class MapperConfig {
 
     @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
+    public Gson gson() {
+        return new Gson();
     }
 }

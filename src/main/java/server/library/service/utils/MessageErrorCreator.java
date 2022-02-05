@@ -1,4 +1,4 @@
-package server.library.service;
+package server.library.service.utils;
 
 import lombok.extern.slf4j.Slf4j;
 

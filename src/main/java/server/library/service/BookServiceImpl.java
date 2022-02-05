@@ -12,6 +12,7 @@ import server.library.exception.BookNotFoundException;
 import server.library.exception.LibraryNotExistingException;
 import server.library.repository.BookRepository;
 import server.library.repository.LibraryRepository;
+import server.library.service.utils.MessageErrorCreator;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -49,7 +50,7 @@ public class BookServiceImpl implements BookService{
         log.info("Searching for a book with name {} and authors {}",name,authors);
         List<Book>result = bookRepository.findByParams(name, authors);
 
-        return getBooks(result,MessageErrorCreator.makeErrorMessage("getBooksByParams",List.of(Optional.ofNullable(name), Optional.ofNullable(authors))));
+        return getBooks(result, MessageErrorCreator.makeErrorMessage("getBooksByParams",List.of(Optional.ofNullable(name), Optional.ofNullable(authors))));
     }
 
 
