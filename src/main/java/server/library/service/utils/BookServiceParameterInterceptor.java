@@ -1,7 +1,7 @@
 package server.library.service.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import server.library.service.BookServiceImpl;
+import server.library.service.BookService;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -13,7 +13,7 @@ public class BookServiceParameterInterceptor {
     public static List<String> getParametersFromMethod(String methodName) throws NoSuchMethodException {
         List<String> parameters = new ArrayList<>();
 
-        Method[] methods = BookServiceImpl.class.getDeclaredMethods();
+        Method[] methods = BookService.class.getDeclaredMethods();
         for (Method method : methods) {
             if (method.getName().equals(methodName)) {
                 for (Parameter p : method.getParameters()) {

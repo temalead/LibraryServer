@@ -34,7 +34,7 @@ class BookServiceTest {
     private LibraryRepository libraryRepository;
 
     @InjectMocks
-    private BookServiceImpl bookService;
+    private BookService bookService;
 
     @Test
     @DisplayName("Should Return New Book")
