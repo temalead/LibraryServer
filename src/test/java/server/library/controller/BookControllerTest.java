@@ -2,27 +2,20 @@ package server.library.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.http.MediaType;
 import server.library.domain.Book;
 import server.library.domain.dto.CreateBookDto;
-import server.library.repository.LibraryRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class BookControllerTest extends SpringTestConfig {
-
-    @Mock
-    private LibraryRepository libraryRepository;
     private final String url = "/library";
 
 
@@ -64,8 +57,6 @@ class BookControllerTest extends SpringTestConfig {
                 .setLibrary(1337L)
                 .setName("TestB")
                 .setAuthors(Set.of("TestB"));
-        when(libraryRepository.findById(1337L)).thenReturn(Optional.empty());
-
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapToJson(request)))

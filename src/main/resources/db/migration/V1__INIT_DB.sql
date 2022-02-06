@@ -19,4 +19,15 @@ create table book
     is_bestseller    boolean,
     library_id       bigserial   not null references library (id)
 );
-
+create table authors(
+    id bigserial references book(id),
+    authors varchar(40)
+);
+create table book_genres(
+    id bigserial references book(id),
+    genres varchar(40)
+);
+create table publishers(
+    id bigserial references book(id),
+    publishers varchar(40)
+);

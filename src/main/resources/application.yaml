@@ -4,8 +4,6 @@ spring:
       fail-on-empty-beans: false
 
   jpa:
-    hibernate:
-      ddl-auto: update
     open-in-view: false
   datasource:
     driver-class-name: org.postgresql.Driver
