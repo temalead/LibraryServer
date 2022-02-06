@@ -20,12 +20,12 @@ public class ExceptionHandlerController {
     @ExceptionHandler({BookNotFoundException.class, LibraryNotExistingException.class})
     public ResponseEntity<String> throwNotFoundExceptionToUser(RuntimeException ex) {
         log.error(ex.getMessage());
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.valueOf(404));
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(LibraryExistByAddressException.class)
     public ResponseEntity<String> throwForbiddenLibrary(RuntimeException e){
         log.error(e.getMessage());
-        return new ResponseEntity<>(e.getMessage(),HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
     }
 }

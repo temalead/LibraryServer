@@ -17,6 +17,7 @@ import server.library.repository.BookRepository;
 import server.library.repository.LibraryRepository;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -115,12 +116,12 @@ class BookServiceTest {
                 .setAuthors(Set.of("Pheel"))
                 .setDescription("Bla-bla")
                 .setBestseller(true)
-                .setDate(Date.valueOf("1988-01-01"));
+                .setDate_of_creation(LocalDate.ofEpochDay(1998- 1 - 1));
         Book expected = book
                 .setAuthors(Set.of("Pheel"))
                 .setDescription("Bla-bla")
                 .setBestseller(true)
-                .setDateOfCreation(Date.valueOf("1988-01-01"));
+                .setDateOfCreation(LocalDate.ofEpochDay(1998- 1 - 1));
 
         when(bookRepository.findById(any())).thenReturn(Optional.of(book));
 
