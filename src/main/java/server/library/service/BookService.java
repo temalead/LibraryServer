@@ -31,6 +31,7 @@ public class BookService{
         long libraryId = book.getLibrary();
         Library existingLibrary = libraryRepository.findById(libraryId)
                 .orElseThrow(()->new LibraryNotExistingException(libraryId));
+
         Book newBook = new Book()
                 .setName(book.getName())
                 .setLibrary(existingLibrary)
@@ -38,7 +39,7 @@ public class BookService{
                 .setAuthors(book.getAuthors())
                 .setPublishers(book.getPublishers())
                 .setDescription(book.getDescription())
-                .setDateOfCreation(book.getDateOfCreation());
+                .setDateOfCreation(book.getDate_of_creation());
         log.info("Added new book with name {} in libraryId {}",newBook.getName(),newBook.getLibrary().getId());
         bookRepository.save(newBook);
         return newBook;
@@ -74,7 +75,7 @@ public class BookService{
                 .setGenres(requestBook.getGenres())
                 .setDescription(requestBook.getDescription())
                 .setBestseller(requestBook.isBestseller())
-                .setDateOfCreation(requestBook.getDate())
+                .setDateOfCreation(requestBook.getDate_of_creation())
                 .setPublishers(requestBook.getPublishers());
 
         log.info("Updated book with id {} to {}", id,requestBook);

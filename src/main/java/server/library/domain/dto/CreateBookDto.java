@@ -8,6 +8,9 @@ import server.library.domain.Genre;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @Setter
@@ -26,5 +29,5 @@ public class CreateBookDto {
     private String description;
     private Set<String> publishers;
     private boolean isBestseller;
-    private Timestamp dateOfCreation;
+    private LocalDate date_of_creation;
 }

@@ -22,6 +22,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -58,8 +60,7 @@ public class Book {
     @CollectionTable(name = "publishers",joinColumns = @JoinColumn(name = "book_id"))
     private Set<String> publishers;
 
-    @Temporal(TemporalType.DATE)
-    private Date dateOfCreation;
+    private LocalDate dateOfCreation;
 
     private boolean isBestseller;
 

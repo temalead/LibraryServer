@@ -6,7 +6,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import server.library.domain.Genre;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 
@@ -21,7 +21,7 @@ public class UpdateBookDto {
     private Set<Genre> genres;
     private String description;
     private boolean isBestseller;
-    private Date date;
+    private LocalDate date_of_creation;
     private Set<String> publishers;
 
 
@@ -33,7 +33,7 @@ public class UpdateBookDto {
                 ", genres=" + genres +
                 ", description='" + description + '\'' +
                 ", isBestseller=" + isBestseller +
-                ", date=" + date +
+                ", date=" + date_of_creation +
                 ", publishers=" + publishers +
                 '}';
     }
