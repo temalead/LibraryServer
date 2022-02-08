@@ -55,3 +55,6 @@ dependencyManagement{
 test {
     useJUnitPlatform()
 }
+tasks.test{
+    jvmArgs("--add-opens", "java.base/java.time=ALL-UNNAMED")
+}
